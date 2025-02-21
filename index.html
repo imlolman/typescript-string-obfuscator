@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript String Obfuscator</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add Dracula theme CSS for code highlighting -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/dracula.min.css"
+        integrity="sha512-zKpFlhUX8c+WC6H/XTJavnEpWFt2zH9BU9vu0Hry5Y+SEgG21pRMFcecS7DgDXIegXBQ3uK9puwWPP3h6WSR9g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .full-height-textarea {
+            height: calc(100vh - 300px);
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .textarea-container {
+            position: relative;
+        }
+
+        /* Add styles for code container */
+        .code-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .code-container pre {
+            margin: 0;
+            border-radius: 4px;
+        }
+
+        #generatedCodeBlock {
+            height: calc(100vh - 300px);
+            min-height: 200px;
+            overflow: auto;
+            background-color: #282a36;
+            /* Dracula theme background */
+            padding: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h4>TypeScript String Obfuscator</h4>
+        <br>
+        <form>
+            <div class="mb-3">
+                <label for="inputTextarea" class="form-label">Input Text</label>
+                <textarea class="form-control" id="inputTextarea" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">Add this code to your obfuscatedStringExporter.ts file and then use functions below to
+                obfuscate and deobfuscate text</div>
+            <div class="code-container">
+                <button type="button" class="btn btn-secondary btn-sm copy-btn"
+                    onclick="copyText('hiddenCodeTextarea')">
+                    Copy
+                </button>
+                <pre><code class="language-typescript" id="codeBlock">const deobfuscate = (nums: number[]): string => nums.map((n) => String.fromCharCode(n)).join("");
+
+const shift = (n: number): number => n - 1;
+const multiply = (n: number): number => n * 2;
+const divide = (n: number): number => n / 2;</code></pre>
+                <textarea id="hiddenCodeTextarea" style="display: none;">const deobfuscate = (nums: number[]): string => nums.map((n) => String.fromCharCode(n)).join("");
+
+const shift = (n: number): number => n - 1;
+const multiply = (n: number): number => n * 2;
+const divide = (n: number): number => n / 2;</textarea>
+            </div>
+
+            <div class="mb-3 textarea-container">
+                <label for="readonlyTextarea" class="form-label">Generated Code</label>
+                <button type="button" class="btn btn-secondary btn-sm copy-btn"
+                    onclick="copyText('hiddenGeneratedCode')">
+                    Copy
+                </button>
+                <pre><code class="language-typescript" id="generatedCodeBlock"></code></pre>
+                <textarea id="hiddenGeneratedCode" style="display: none;"></textarea>
+            </div>
+        </form>
+    </div>
+
+    <!-- Add Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+    <script>
+        // Initialize highlight.js for TypeScript
+        document.querySelectorAll('pre code').forEach((el) => {
+            // Remove previous highlighting if it exists
+            if (el.dataset.highlighted) {
+                delete el.dataset.highlighted;
+            }
+            // Apply highlighting
+            hljs.highlightElement(el);
+        });
+
+        function copyText(elementId) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.select();
+            document.execCommand('copy');
+            element.style.display = 'none';
+
+            // Optional: Show feedback
+            const btn = event.currentTarget;
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 1000);
+        }
+    </script>
+</body>
+
+<script src="script.js"></script>
+
+</html>
